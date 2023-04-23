@@ -1,25 +1,37 @@
-import CartProductCard from './CartProductCard';
+import CartProductCard from "./CartProductCard";
 
-import { StyledCartProductList } from './style';
-import { StyledButton } from '../../../styles/button';
-import { StyledParagraph } from '../../../styles/typography';
+import { StyledCartProductList } from "./style";
+import { StyledButton } from "../../../styles/button";
+import { StyledParagraph } from "../../../styles/typography";
+import { useContext } from "react";
+import { AuthCartContext } from "../../../providers/cartContext";
 
-const CartProductList = () => (
-  <StyledCartProductList>
-    <ul>
-      <CartProductCard />
-    </ul>
+const CartProductList = () => {
+  const { cartTotal, removeAllProducts } = useContext(AuthCartContext);
 
-    <div className='totalBox'>
-      <StyledParagraph>
-        <strong>Total</strong>
-      </StyledParagraph>
-      <StyledParagraph className='total'>R$ 14,00</StyledParagraph>
-    </div>
-    <StyledButton $buttonSize='default' $buttonStyle='gray'>
-      Remover todos
-    </StyledButton>
-  </StyledCartProductList>
-);
+  return (
+    <StyledCartProductList>
+      <ul>
+        <CartProductCard />
+      </ul>
+
+      <div className="totalBox">
+        <StyledParagraph>
+          <strong>Total</strong>
+        </StyledParagraph>
+        <StyledParagraph className="total">
+          R$ {cartTotal.toLocaleString()}
+        </StyledParagraph>
+      </div>
+      <StyledButton
+        $buttonSize="default"
+        $buttonStyle="gray"
+        onClick={() => removeAllProducts()}
+      >
+        Remover todos
+      </StyledButton>
+    </StyledCartProductList>
+  );
+};
 
 export default CartProductList;
